@@ -5,8 +5,25 @@ import { motion } from "framer-motion";
 export default function Home() {
   const [form, setForm] = useState("");
   const [tasks, setTasks] = useState([]);
+  // const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const url = "https://to-do-2ik4.onrender.com";
+
+  // function switchInput(i) {
+  //   let element = document.getElementById(i);
+  //   element.innerHTML = `<input className="" onblur=${axios.put(url, data: {
+  //     _id: id,
+  //     content: element.target.value
+  //   })}}value=${tasks[i].content}>hello</input>`;
+  //   console.log(i)
+  // }
+
+  // function resetInput(i) {
+  //   let element = document.getElementById(i);
+  //   element.innerHTML = `<p className="flex-1 overflow-scroll text-lg focus:outline-none"
+  //   id="content" value=${tasks[i].content}></p>`;
+  //   console.log("reset")
+  // }
 
   useEffect(() => {
     async function getTasks() {
@@ -66,15 +83,14 @@ export default function Home() {
             <div className="flex p-4 rounded justify-center border mt-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-fidget-spinner"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="#9e9e9e"
                 fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="animate-spin"
               >
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -110,21 +126,22 @@ export default function Home() {
               >
                 <div className="flex p-3 rounded border mt-3">
                   <p
-                    contenteditable="false"
                     className="flex-1 overflow-scroll text-lg focus:outline-none"
-                    id="content"
+                    id={i}
                   >
                     {tasks[i].content}
                   </p>
                   <div className="ml-4">
-                    <button
+                    {/* <button
                       className="p-1 border rounded shadow-sm ml-4 hover:bg-blue-100 ease-in-out transition"
                       onClick={async (e) => {
                         e.preventDefault();
-                        
-                        document
-                          .getElementById("content")
-                          .setAttribute("contenteditable", "true");
+                        // setEdit(true);
+                        switchInput(i)
+
+                        // document
+                        //   .getElementById("content")
+                        //   .setAttribute("contenteditable", "true");
                         // await axios.put(url, {
                         //   _id: tasks[i]._id,
                         //   content: "content",
@@ -135,22 +152,22 @@ export default function Home() {
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-edit"
+                        className="icon icon-tabler icon-tabler-edit"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
-                        stroke-width="1"
+                        strokeWidth="1"
                         stroke="#000000"
                         fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       >
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
                         <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
                         <path d="M16 5l3 3" />
                       </svg>
-                    </button>
+                    </button> */}
                     <button
                       className="p-1 border rounded shadow-sm ml-2 hover:bg-red-300 ease-in-out transition-all"
                       onClick={async (e) => {
@@ -164,15 +181,15 @@ export default function Home() {
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="icon icon-tabler icon-tabler-trash"
+                        className="icon icon-tabler icon-tabler-trash"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
-                        stroke-width="1"
+                        strokeWidth="1"
                         stroke="#000000"
                         fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       >
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M4 7l16 0" />
