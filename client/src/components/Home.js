@@ -128,13 +128,25 @@ export default function Home() {
                         className="p-1 border rounded shadow-sm hover:bg-tick ease-in-out transition"
                         onClick={async (e) => {
                           e.preventDefault();
-                          await axios.put(url, {
-                            _id: item._id,
-                            content: editText,
-                          });
-                          const new_tasks = await axios.get(url);
-                          setTasks(new_tasks.data);
-                          setEditId("");
+                          if (editText === "") {
+                            await axios.delete(url, {
+                              data: { _id: item._id },
+                            });
+                            setEditId("");
+                            const new_tasks = await axios.get(url);
+                            setTasks(new_tasks.data);
+                          }
+                          if (editText === item.content) {
+                            setEditId("");
+                          } else {
+                            await axios.put(url, {
+                              _id: item._id,
+                              content: editText,
+                            });
+                            const new_tasks = await axios.get(url);
+                            setTasks(new_tasks.data);
+                            setEditId("");
+                          }
                         }}
                       >
                         <svg
@@ -211,7 +223,7 @@ export default function Home() {
                         </svg>
                       </button>
                       {/* Delete */}
-                      <button 
+                      <button
                         className="p-1 border rounded shadow-sm ml-2 hover:bg-delete ease-in-out transition-all"
                         onClick={async (e) => {
                           e.preventDefault();
