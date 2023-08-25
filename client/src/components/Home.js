@@ -129,13 +129,13 @@ export default function Home() {
                         onClick={async (e) => {
                           e.preventDefault();
                           if (editText === "") {
-                            // await axios.delete(url, {
-                            //   data: { _id: item._id },
-                            // });
-                            // setEditId("");
-                            // const new_tasks = await axios.get(url);
-                            // setTasks(new_tasks.data);
-                            window.alert("delete?");
+                            await axios.delete(url, {
+                              data: { _id: item._id },
+                            });
+                            setEditId("");
+                            const new_tasks = await axios.get(url);
+                            setTasks(new_tasks.data);
+                            // window.alert("delete?");
                           }
                           if (editText === item.content) {
                             setEditId("");
