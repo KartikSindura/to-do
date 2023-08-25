@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body, html, #root {
-    height: 100%;
+body,
+html,
+#root {
+  height: 100%;
+  --primary: theme(colors.blue.100);
+  --delete: theme(colors.red.300);
+  --cancel: theme(colors.red.200);
+  --tick: theme(colors.green.100)
 }

@@ -5,25 +5,10 @@ import { motion } from "framer-motion";
 export default function Home() {
   const [form, setForm] = useState("");
   const [tasks, setTasks] = useState([]);
-  // const [edit, setEdit] = useState(false);
+  const [editId, setEditId] = useState("");
+  const [editText, setEditText] = useState("");
   const [loading, setLoading] = useState(false);
   const url = "https://to-do-2ik4.onrender.com";
-
-  // function switchInput(i) {
-  //   let element = document.getElementById(i);
-  //   element.innerHTML = `<input className="" onblur=${axios.put(url, data: {
-  //     _id: id,
-  //     content: element.target.value
-  //   })}}value=${tasks[i].content}>hello</input>`;
-  //   console.log(i)
-  // }
-
-  // function resetInput(i) {
-  //   let element = document.getElementById(i);
-  //   element.innerHTML = `<p className="flex-1 overflow-scroll text-lg focus:outline-none"
-  //   id="content" value=${tasks[i].content}></p>`;
-  //   console.log("reset")
-  // }
 
   useEffect(() => {
     async function getTasks() {
@@ -58,6 +43,7 @@ export default function Home() {
                 await axios.post(url, { content: form });
                 const new_tasks = await axios.get(url);
                 setTasks(new_tasks.data);
+                setEditId("");
                 setLoading(false);
               } else {
                 e.preventDefault();
@@ -74,7 +60,7 @@ export default function Home() {
                   setForm(e.target.value);
                 }}
               ></input>
-              <button className="w-1/6 bg-blue-100 rounded-r p-[9px] font-medium">
+              <button className="w-1/6 bg-primary rounded-r p-[9px] font-medium">
                 Add
               </button>
             </div>
@@ -110,102 +96,159 @@ export default function Home() {
               transition={{ duration: 0.2, delay: 0.1 }}
               alt="no"
             >
-              <div className="flex justify-center p-6 bg-blue-100 rounded-lg font-medium mt-3">
+              <div className="flex justify-center p-6 bg-primary rounded-lg font-medium mt-3">
                 No tasks
               </div>
             </motion.div>
           ) : (
-            tasks.map((e, i) => (
-              <motion.div
-                target="_blank"
-                href="/"
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-                alt="no"
-              >
-                <div className="flex p-3 rounded border mt-3">
+            tasks.map((item, i) => (
+              <div className="flex p-3 rounded border mt-3">
+                {editId === item._id ? (
+                  <input
+                    type="text"
+                    value={editText}
+                    onChange={(e) => {
+                      setEditText(e.target.value);
+                    }}
+                    className="flex-1 text-lg overflow-scroll bg-primary rounded p-2"
+                  />
+                ) : (
                   <p
                     className="flex-1 overflow-scroll text-lg focus:outline-none"
                     id={i}
                   >
-                    {tasks[i].content}
+                    {item.content}
                   </p>
-                  <div className="ml-4">
-                    {/* <button
-                      className="p-1 border rounded shadow-sm ml-4 hover:bg-blue-100 ease-in-out transition"
-                      onClick={async (e) => {
-                        e.preventDefault();
-                        // setEdit(true);
-                        switchInput(i)
-
-                        // document
-                        //   .getElementById("content")
-                        //   .setAttribute("contenteditable", "true");
-                        // await axios.put(url, {
-                        //   _id: tasks[i]._id,
-                        //   content: "content",
-                        // });
-                        // const new_tasks = await axios.get(url);
-                        // setTasks(new_tasks.data);
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-edit"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1"
-                        stroke="#000000"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                )}
+                {editId === item._id ? (
+                  <div className="ml-4 flex">
+                    <div className="self-center">
+                      {/* Tick */}
+                      <button
+                        className="p-1 border rounded shadow-sm hover:bg-tick ease-in-out transition"
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          await axios.put(url, {
+                            _id: item._id,
+                            content: editText,
+                          });
+                          const new_tasks = await axios.get(url);
+                          setTasks(new_tasks.data);
+                          setEditId("");
+                        }}
                       >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                        <path d="M16 5l3 3" />
-                      </svg>
-                    </button> */}
-                    <button
-                      className="p-1 border rounded shadow-sm ml-2 hover:bg-red-300 ease-in-out transition-all"
-                      onClick={async (e) => {
-                        e.preventDefault();
-                        await axios.delete(url, {
-                          data: { _id: tasks[i]._id },
-                        });
-                        const new_tasks = await axios.get(url);
-                        setTasks(new_tasks.data);
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-trash"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1"
-                        stroke="#000000"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-check"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="#7bc62d"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M5 12l5 5l10 -10" />
+                        </svg>
+                      </button>
+                      {/* Cancel */}
+                      <button
+                        className="p-1 border rounded shadow-sm ml-2 hover:bg-cancel ease-in-out transition-all"
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          setEditId("");
+                        }}
                       >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M4 7l16 0" />
-                        <path d="M10 11l0 6" />
-                        <path d="M14 11l0 6" />
-                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                      </svg>
-                    </button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-x"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="#ff2825"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M18 6l-12 12" />
+                          <path d="M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                ) : (
+                  <div className="ml-4 flex">
+                    <div className="self-center">
+                      {/* Edit */}
+                      <button
+                        className="p-1 border rounded shadow-sm hover:bg-primary ease-in-out transition"
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          setEditId(item._id);
+                          setEditText(item.content);
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="icon icon-tabler icon-tabler-edit"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1"
+                          stroke="#000000"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                          <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                          <path d="M16 5l3 3" />
+                        </svg>
+                      </button>
+                      {/* Delete */}
+                      <button 
+                        className="p-1 border rounded shadow-sm ml-2 hover:bg-delete ease-in-out transition-all"
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          await axios.delete(url, {
+                            data: { _id: item._id },
+                          });
+                          setEditId("");
+                          const new_tasks = await axios.get(url);
+                          setTasks(new_tasks.data);
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="icon icon-tabler icon-tabler-trash"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1"
+                          stroke="#000000"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M4 7l16 0" />
+                          <path d="M10 11l0 6" />
+                          <path d="M14 11l0 6" />
+                          <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                          <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             ))
           )}
-
-          {/* {} */}
         </div>
       </div>
     </motion.div>
