@@ -22,72 +22,78 @@ export default function Home() {
   }, [tasks.length]);
 
   return (
-    <motion.div
-      target="_blank"
-      href="/"
-      initial={{ y: 10, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3, delay: 0.1 }}
-      alt="no"
-    >
-      <div className="flex justify-center align-middle mt-12 ">
-        <div className="w-[700px] shadow-md p-3 rounded-lg mb-12">
-          <h1 className="text-3xl font-bold mb-3 ">Todo.</h1>
-          <form
-            onSubmit={async (e) => {
-              if (form !== "") {
-                e.preventDefault();
-                setForm("");
-                setLoading(true);
-                e.target.reset();
-                await axios.post(url, { content: form });
-                const new_tasks = await axios.get(url);
-                setTasks(new_tasks.data);
-                setEditId("");
-                setLoading(false);
-              } else {
-                e.preventDefault();
-              }
-            }}
-            className="w-full"
+    <div className="flex justify-center align-middle mt-12 ">
+      <div className="w-[700px] shadow-md p-3 rounded-lg mb-12">
+        <h1 className="text-3xl font-bold mb-3 ">Todo.</h1>
+        <form
+          onSubmit={async (e) => {
+            if (form !== "") {
+              e.preventDefault();
+              setForm("");
+              setLoading(true);
+              e.target.reset();
+              await axios.post(url, { content: form });
+              const new_tasks = await axios.get(url);
+              setTasks(new_tasks.data);
+              setEditId("");
+              setLoading(false);
+            } else {
+              e.preventDefault();
+            }
+          }}
+          className="w-full"
+        >
+          <div className="">
+            <input
+              placeholder="Enter a task"
+              className="w-5/6 rounded-l border p-2 focus:outline-none border-r-0"
+              type="text"
+              onChange={(e) => {
+                setForm(e.target.value);
+              }}
+            ></input>
+            <button className="w-1/6 bg-primary rounded-r p-[9px] font-medium">
+              Add
+            </button>
+          </div>
+        </form>
+        {loading ? (
+          <div className="flex p-4 rounded justify-center border mt-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="#9e9e9e"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="animate-spin"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M18 16v.01" />
+              <path d="M6 16v.01" />
+              <path d="M12 5v.01" />
+              <path d="M12 12v.01" />
+              <path d="M12 1a4 4 0 0 1 2.001 7.464l.001 .072a3.998 3.998 0 0 1 1.987 3.758l.22 .128a3.978 3.978 0 0 1 1.591 -.417l.2 -.005a4 4 0 1 1 -3.994 3.77l-.28 -.16c-.522 .25 -1.108 .39 -1.726 .39c-.619 0 -1.205 -.14 -1.728 -.391l-.279 .16l.007 .231a4 4 0 1 1 -2.212 -3.579l.222 -.129a3.998 3.998 0 0 1 1.988 -3.756l.002 -.071a4 4 0 0 1 -1.995 -3.265l-.005 -.2a4 4 0 0 1 4 -4z" />
+            </svg>
+          </div>
+        ) : tasks.length === 0 ? (
+          <motion.div
+            target="_blank"
+            href="/"
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.2, delay: 0.1 }}
+            alt="no"
           >
-            <div className="">
-              <input
-                placeholder="Enter a task"
-                className="w-5/6 rounded-l border p-2 focus:outline-none border-r-0"
-                type="text"
-                onChange={(e) => {
-                  setForm(e.target.value);
-                }}
-              ></input>
-              <button className="w-1/6 bg-primary rounded-r p-[9px] font-medium">
-                Add
-              </button>
+            <div className="flex justify-center p-6 bg-primary rounded-lg font-medium mt-3">
+              No tasks
             </div>
-          </form>
-          {loading ? (
-            <div className="flex p-4 rounded justify-center border mt-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="#9e9e9e"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="animate-spin"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M18 16v.01" />
-                <path d="M6 16v.01" />
-                <path d="M12 5v.01" />
-                <path d="M12 12v.01" />
-                <path d="M12 1a4 4 0 0 1 2.001 7.464l.001 .072a3.998 3.998 0 0 1 1.987 3.758l.22 .128a3.978 3.978 0 0 1 1.591 -.417l.2 -.005a4 4 0 1 1 -3.994 3.77l-.28 -.16c-.522 .25 -1.108 .39 -1.726 .39c-.619 0 -1.205 -.14 -1.728 -.391l-.279 .16l.007 .231a4 4 0 1 1 -2.212 -3.579l.222 -.129a3.998 3.998 0 0 1 1.988 -3.756l.002 -.071a4 4 0 0 1 -1.995 -3.265l-.005 -.2a4 4 0 0 1 4 -4z" />
-              </svg>
-            </div>
-          ) : tasks.length === 0 ? (
+          </motion.div>
+        ) : (
+          tasks.map((item, i) => (
             <motion.div
               target="_blank"
               href="/"
@@ -96,12 +102,6 @@ export default function Home() {
               transition={{ duration: 0.2, delay: 0.1 }}
               alt="no"
             >
-              <div className="flex justify-center p-6 bg-primary rounded-lg font-medium mt-3">
-                No tasks
-              </div>
-            </motion.div>
-          ) : (
-            tasks.map((item, i) => (
               <div className="flex p-3 rounded border mt-3">
                 {editId === item._id ? (
                   <input
@@ -129,12 +129,13 @@ export default function Home() {
                         onClick={async (e) => {
                           e.preventDefault();
                           if (editText === "") {
-                            await axios.delete(url, {
-                              data: { _id: item._id },
-                            });
-                            setEditId("");
-                            const new_tasks = await axios.get(url);
-                            setTasks(new_tasks.data);
+                            // await axios.delete(url, {
+                            //   data: { _id: item._id },
+                            // });
+                            // setEditId("");
+                            // const new_tasks = await axios.get(url);
+                            // setTasks(new_tasks.data);
+                            window.alert("delete?");
                           }
                           if (editText === item.content) {
                             setEditId("");
@@ -259,10 +260,10 @@ export default function Home() {
                   </div>
                 )}
               </div>
-            ))
-          )}
-        </div>
+            </motion.div>
+          ))
+        )}
       </div>
-    </motion.div>
+    </div>
   );
 }
