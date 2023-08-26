@@ -36,7 +36,7 @@ export default function Home() {
       <Popup err={errMsg} vis={visible}/>
 
       <div className="flex justify-center align-middle dark:text-text">
-        <div className="w-[700px] shadow-md p-3 rounded-lg mb-12 dark:border-type dark:border-2 m-12">
+        <div className="w-[700px] shadow-md p-3 rounded-lg mb-12 dark:border-type dark:border-2 mt-16">
           <h1 className="text-3xl font-bold mb-3 dark:text-todo">Todo.</h1>
           <form
             type="submit"
