@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import Popup from "./Popup";
 
 export default function Home() {
-  // const url = "https://to-do-2ik4.onrender.com";
-  const url = "http://localhost:5050/"
+  const url = "https://to-do-2ik4.onrender.com";
+  // const url = "http://localhost:5050/"
   const [form, setForm] = useState("");
   const [tasks, setTasks] = useState([]);
   const [editId, setEditId] = useState("");
