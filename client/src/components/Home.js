@@ -43,9 +43,8 @@ export default function Home() {
             onSubmit={async (e) => {
               if (form !== "") {
                 e.preventDefault();
-                setForm("");
                 setLoading(true);
-                e.target.reset();
+                setForm("");
                 await axios.post(url, { content: form });
                 const new_tasks = await axios.get(url);
                 setTasks(new_tasks.data);
@@ -64,11 +63,12 @@ export default function Home() {
                 placeholder="Enter a task"
                 className="w-5/6 rounded-l border dark:border-type p-2 focus:outline-none border-r-0 dark:text-text dark:bg-type"
                 type="text"
+                value={form}
                 onChange={(e) => {
                   setForm(e.target.value);
                 }}
               ></input>
-              <button className="w-1/6 bg-primary rounded-r p-[9px] font-medium dark:bg-type dark:border-l-[#010203] dark:border-l-2">
+              <button type="submit" className="w-1/6 bg-primary rounded-r p-[9px] font-medium dark:bg-type dark:border-l-[#010203] dark:border-l-2">
                 Add
               </button>
             </div>
