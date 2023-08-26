@@ -9,5 +9,21 @@ html,
   --primary: theme(colors.blue.100);
   --delete: theme(colors.red.300);
   --cancel: theme(colors.red.200);
-  --tick: theme(colors.green.100)
+  --tick: theme(colors.green.100);
+  --dark-primary: theme(colors.slate.700);
+  --dark-bg: theme(colors.slate.950);
+
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-corner {
+  
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #858585;
+  border-radius: 0.15rem;
 }

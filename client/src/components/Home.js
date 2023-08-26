@@ -4,51 +4,42 @@ import { motion } from "framer-motion";
 import Popup from "./Popup";
 
 export default function Home() {
+  const url = "https://to-do-2ik4.onrender.com";
   const [form, setForm] = useState("");
   const [tasks, setTasks] = useState([]);
   const [editId, setEditId] = useState("");
   const [editText, setEditText] = useState("");
   const [loading, setLoading] = useState(false);
-  const url = "https://to-do-2ik4.onrender.com";
-  const [visible, setVisible] = useState("none");
+  const [visible, setVisible] = useState("0");
   const [errMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     async function getTasks() {
-      setLoading(true);
+      // setLoading(true);
       const res = await axios.get(url);
       const data = res.data;
       setTasks(data);
-      setLoading(false);
+      // setLoading(false);
     }
     getTasks();
   }, [tasks.length]);
 
   useEffect(() => {
     setTimeout(() => {
-      setVisible("none");
-    }, 7000);
+      setVisible("0");
+    }, 4000);
   });
 
   return (
     <>
-      <motion.div
-        target="_blank"
-        href="/"
-        initial={{ y: 10, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.2, delay: 0.1 }}
-        alt="no"
-      >
-        <div>
-          <Popup err={errMsg} vis={visible} />
-        </div>
-      </motion.div>
+    
+      <Popup err={errMsg} vis={visible}/>
 
-      <div className="flex justify-center align-middle mt-12 ">
-        <div className="w-[700px] shadow-md p-3 rounded-lg mb-12">
-          <h1 className="text-3xl font-bold mb-3 ">Todo.</h1>
+      <div className="flex justify-center align-middle">
+        <div className="w-[700px] shadow-md p-3 rounded-lg mb-12 dark:border-dark_primary dark:border m-12">
+          <h1 className="text-3xl font-bold mb-3">Todo.</h1>
           <form
+            type="submit"
             onSubmit={async (e) => {
               if (form !== "") {
                 e.preventDefault();
@@ -62,6 +53,8 @@ export default function Home() {
                 setLoading(false);
               } else {
                 e.preventDefault();
+                setErrorMsg("Enter a task.")
+                setVisible("1")
               }
             }}
             className="w-full"
@@ -69,26 +62,26 @@ export default function Home() {
             <div className="">
               <input
                 placeholder="Enter a task"
-                className="w-5/6 rounded-l border p-2 focus:outline-none border-r-0"
+                className="w-5/6 rounded-l border p-2 focus:outline-none border-r-0 dark:text-black"
                 type="text"
                 onChange={(e) => {
                   setForm(e.target.value);
                 }}
               ></input>
-              <button className="w-1/6 bg-primary rounded-r p-[9px] font-medium">
+              <button className="w-1/6 bg-primary rounded-r p-[9px] font-medium dark:bg-dark_primary">
                 Add
               </button>
             </div>
           </form>
           {loading ? (
-            <div className="flex p-4 rounded justify-center border mt-3">
+            <div className="flex p-4 rounded justify-center border mt-3 dark:border-dark_primary">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
-                stroke="#9e9e9e"
+                stroke="#ffffff"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -111,7 +104,7 @@ export default function Home() {
               transition={{ duration: 0.2, delay: 0.1 }}
               alt="no"
             >
-              <div className="flex justify-center p-6 bg-primary rounded-lg font-medium mt-3">
+              <div className="flex justify-center p-6 bg-primary rounded-lg font-medium mt-3 dark:bg-dark_primary">
                 No tasks
               </div>
             </motion.div>
@@ -125,41 +118,37 @@ export default function Home() {
                 transition={{ duration: 0.2, delay: 0.1 }}
                 alt="no"
               >
-                <div className="flex p-3 rounded border mt-3">
+                <div className="flex break-words p-3 rounded border mt-3 dark:border-dark_primary">
                   {editId === item._id ? (
-                    <input
+                    <textarea
                       type="text"
                       value={editText}
                       onChange={(e) => {
                         setEditText(e.target.value);
                       }}
-                      className="flex-1 text-lg overflow-scroll bg-primary rounded p-2"
+                      className="flex-1 text-lg bg-primary rounded p-2 resize-none min-h-[120px] whitespace-pre dark:bg-dark_primary dark:outline-none dark:outline-dark_primary"
                     />
                   ) : (
-                    <p className="flex-1 overflow-scroll text-lg" id={i}>
+                    <p
+                      className="flex-1 overflow-scroll text-lg whitespace-pre"
+                      id={i}
+                    >
                       {item.content}
                     </p>
                   )}
                   {editId === item._id ? (
                     <div className="ml-4 flex">
-                      <div className="self-center">
+                      <div className="">
                         {/* Tick */}
                         <button
-                          className="p-1 border rounded shadow-sm hover:bg-tick ease-in-out transition"
+                          className="p-1 border rounded shadow-sm hover:bg-tick ease-in-out transition dark:border-dark_primary"
                           onClick={async (e) => {
                             e.preventDefault();
                             if (editText === "") {
-                              // await axios.delete(url, {
-                              //   data: { _id: item._id },
-                              // });
-                              // setEditId("");
-                              // const new_tasks = await axios.get(url);
-                              // setTasks(new_tasks.data);
-                              // window.alert("delete?");
+                              setEditId("");
                               setErrorMsg("Tasks can't be empty.");
-                              setVisible("block");
-                            }
-                            if (editText === item.content) {
+                              setVisible("1");
+                            } else if (editText === item.content) {
                               setEditId("");
                             } else {
                               await axios.put(url, {
@@ -190,7 +179,7 @@ export default function Home() {
                         </button>
                         {/* Cancel */}
                         <button
-                          className="p-1 border rounded shadow-sm ml-2 hover:bg-cancel ease-in-out transition-all"
+                          className="p-1 border rounded shadow-sm ml-2 hover:bg-cancel ease-in-out transition-all dark:border-dark_primary"
                           onClick={async (e) => {
                             e.preventDefault();
                             setEditId("");
@@ -217,10 +206,10 @@ export default function Home() {
                     </div>
                   ) : (
                     <div className="ml-4 flex">
-                      <div className="self-center">
+                      <div className="">
                         {/* Edit */}
                         <button
-                          className="p-1 border rounded shadow-sm hover:bg-primary ease-in-out transition"
+                          className="p-1 border rounded shadow-sm hover:bg-primary hover:dark:bg-dark_primary ease-in-out transition dark:border-dark_primary"
                           onClick={async (e) => {
                             e.preventDefault();
                             setEditId(item._id);
@@ -229,12 +218,12 @@ export default function Home() {
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="icon icon-tabler icon-tabler-edit"
+                            className="icon icon-tabler icon-tabler-edit stroke-black dark:stroke-white"
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
                             strokeWidth="1"
-                            stroke="#000000"
+                            // stroke="#000000"
                             fill="none"
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -247,7 +236,7 @@ export default function Home() {
                         </button>
                         {/* Delete */}
                         <button
-                          className="p-1 border rounded shadow-sm ml-2 hover:bg-delete ease-in-out transition-all"
+                          className="p-1 border rounded shadow-sm ml-2 hover:bg-delete ease-in-out transition-all dark:border-dark_primary"
                           onClick={async (e) => {
                             e.preventDefault();
                             await axios.delete(url, {
@@ -260,12 +249,12 @@ export default function Home() {
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="icon icon-tabler icon-tabler-trash"
+                            className="icon icon-tabler icon-tabler-trash stroke-black dark:stroke-white"
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
                             strokeWidth="1"
-                            stroke="#000000"
+                            // stroke="#000000"
                             fill="none"
                             strokeLinecap="round"
                             strokeLinejoin="round"
