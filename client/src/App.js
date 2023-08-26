@@ -9,7 +9,7 @@ const App = () => {
     setDarkMode(!darkMode);
   };
   return (
-    <div className={darkMode ? "dark h-full" : ""}>
+    <div className={darkMode ? "dark dark:h-full" : ""}>
       <div className="dark:bg-monkey dark:text-white bg-white h-full">
         <button
           className="p-1 border rounded shadow-sm dark:border-type absolute right-0 top-3 lg:right-3 md:right-3 dark:border-2"
