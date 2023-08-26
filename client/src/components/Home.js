@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import Popup from "./Popup";
 
 export default function Home() {
-  const url = "https://to-do-2ik4.onrender.com";
+  // const url = "https://to-do-2ik4.onrender.com";
+  const url = "http://localhost:5050/"
   const [form, setForm] = useState("");
   const [tasks, setTasks] = useState([]);
   const [editId, setEditId] = useState("");
@@ -130,7 +131,7 @@ export default function Home() {
                     />
                   ) : (
                     <p
-                      className="flex-1 overflow-scroll text-lg whitespace-pre"
+                      className="flex-1 overflow-scroll text-lg whitespace-pre dark:text-text"
                       id={i}
                     >
                       {item.content}
@@ -141,7 +142,7 @@ export default function Home() {
                       <div className="">
                         {/* Tick */}
                         <button
-                          className="p-1 border rounded shadow-sm hover:bg-tick ease-in-out transition dark:border-type"
+                          className="p-1 border rounded shadow-sm hover:bg-tick ease-in-out transition-all duration-250 dark:border-type"
                           onClick={async (e) => {
                             e.preventDefault();
                             if (editText === "") {
@@ -179,7 +180,7 @@ export default function Home() {
                         </button>
                         {/* Cancel */}
                         <button
-                          className="p-1 border rounded shadow-sm ml-2 hover:bg-cancel ease-in-out transition-all dark:border-type"
+                          className="p-1 border rounded shadow-sm ml-2 hover:bg-cancel ease-in-out transition-all duration-250 dark:border-type"
                           onClick={async (e) => {
                             e.preventDefault();
                             setEditId("");
@@ -209,7 +210,7 @@ export default function Home() {
                       <div className="">
                         {/* Edit */}
                         <button
-                          className="p-1 border rounded shadow-sm hover:bg-primary hover:dark:bg-type ease-in-out transition-all dark:border-type"
+                          className="p-1 border rounded shadow-sm hover:bg-primary hover:dark:bg-type ease-in-out transition-all duration-250 dark:border-type"
                           onClick={async (e) => {
                             e.preventDefault();
                             setEditId(item._id);
@@ -236,7 +237,7 @@ export default function Home() {
                         </button>
                         {/* Delete */}
                         <button
-                          className="p-1 border rounded shadow-sm ml-2 hover:bg-delete ease-in-out transition-all dark:border-type"
+                          className="p-1 border rounded shadow-sm ml-2 hover:bg-delete ease-in-out transition-all duration-250 dark:border-type"
                           onClick={async (e) => {
                             e.preventDefault();
                             await axios.delete(url, {

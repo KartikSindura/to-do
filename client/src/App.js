@@ -12,7 +12,7 @@ const App = () => {
     <div className={`${darkMode ? "dark" : ""} min-h-screen`}>
       <div className="dark:bg-monkey dark:text-white bg-white min-h-screen">
         <button
-          className="p-1 border rounded shadow-sm dark:border-type absolute right-0 top-3 lg:right-3 md:right-3 dark:border-2"
+          className="p-1 border rounded hover:bg-primary dark:hover:bg-type ease-in-out transition-all duration-250 shadow-sm dark:border-type absolute right-0 top-3 lg:right-3 md:right-3 dark:border-2"
           onClick={toggleDarkMode}
         >
           {" "}

@@ -12,10 +12,15 @@ module.exports = {
         dark_bg: "var(--dark-bg)",
         dark_primary: "var(--dark-primary)",
         monkey: "#010203",
-        type: "#121212",
-        text: "#5E676D",
+        type: "#2e2c2c",
+        text: "#7d8991",
         todo: "#E25403",
-        button: "#32373B"
+
+        // Arch,
+        // monkey: "#0C0D12",
+        // type: "#232636",
+        // text: "#454964",
+        // todo: "#7EB9B5",
       },
     },
   },
