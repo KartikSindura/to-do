@@ -85,7 +85,7 @@ export default function Home() {
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="animate-spin dark:stroke-text"
+                className="animate-spin stroke-text"
               >
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M18 16v.01" />
