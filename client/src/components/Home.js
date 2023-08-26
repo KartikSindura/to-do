@@ -35,9 +35,9 @@ export default function Home() {
     
       <Popup err={errMsg} vis={visible}/>
 
-      <div className="flex justify-center align-middle">
-        <div className="w-[700px] shadow-md p-3 rounded-lg mb-12 dark:border-dark_primary dark:border m-12">
-          <h1 className="text-3xl font-bold mb-3">Todo.</h1>
+      <div className="flex justify-center align-middle dark:text-text">
+        <div className="w-[700px] shadow-md p-3 rounded-lg mb-12 dark:border-type dark:border-2 m-12">
+          <h1 className="text-3xl font-bold mb-3 dark:text-todo">Todo.</h1>
           <form
             type="submit"
             onSubmit={async (e) => {
@@ -62,30 +62,30 @@ export default function Home() {
             <div className="">
               <input
                 placeholder="Enter a task"
-                className="w-5/6 rounded-l border p-2 focus:outline-none border-r-0 dark:text-black"
+                className="w-5/6 rounded-l border dark:border-type p-2 focus:outline-none border-r-0 dark:text-text dark:bg-type"
                 type="text"
                 onChange={(e) => {
                   setForm(e.target.value);
                 }}
               ></input>
-              <button className="w-1/6 bg-primary rounded-r p-[9px] font-medium dark:bg-dark_primary">
+              <button className="w-1/6 bg-primary rounded-r p-[9px] font-medium dark:bg-type dark:border-l-[#010203] dark:border-l-2">
                 Add
               </button>
             </div>
           </form>
           {loading ? (
-            <div className="flex p-4 rounded justify-center border mt-3 dark:border-dark_primary">
+            <div className="flex p-4 rounded justify-center border mt-3 dark:border-type">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
-                stroke="#ffffff"
+                // stroke="#ffffff"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="animate-spin"
+                className="animate-spin dark:stroke-text"
               >
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M18 16v.01" />
@@ -104,7 +104,7 @@ export default function Home() {
               transition={{ duration: 0.2, delay: 0.1 }}
               alt="no"
             >
-              <div className="flex justify-center p-6 bg-primary rounded-lg font-medium mt-3 dark:bg-dark_primary">
+              <div className="flex justify-center p-6 bg-primary rounded-lg font-medium mt-3 dark:bg-type">
                 No tasks
               </div>
             </motion.div>
@@ -118,7 +118,7 @@ export default function Home() {
                 transition={{ duration: 0.2, delay: 0.1 }}
                 alt="no"
               >
-                <div className="flex break-words p-3 rounded border mt-3 dark:border-dark_primary">
+                <div className="flex break-words p-3 rounded border mt-3 dark:border-type">
                   {editId === item._id ? (
                     <textarea
                       type="text"
@@ -126,7 +126,7 @@ export default function Home() {
                       onChange={(e) => {
                         setEditText(e.target.value);
                       }}
-                      className="flex-1 text-lg bg-primary rounded p-2 resize-none min-h-[120px] whitespace-pre dark:bg-dark_primary dark:outline-none dark:outline-dark_primary"
+                      className="flex-1 text-lg bg-primary rounded p-2 resize-none min-h-[120px] whitespace-pre dark:bg-type dark:outline-none dark:outline-type"
                     />
                   ) : (
                     <p
@@ -141,7 +141,7 @@ export default function Home() {
                       <div className="">
                         {/* Tick */}
                         <button
-                          className="p-1 border rounded shadow-sm hover:bg-tick ease-in-out transition dark:border-dark_primary"
+                          className="p-1 border rounded shadow-sm hover:bg-tick ease-in-out transition dark:border-type"
                           onClick={async (e) => {
                             e.preventDefault();
                             if (editText === "") {
@@ -179,7 +179,7 @@ export default function Home() {
                         </button>
                         {/* Cancel */}
                         <button
-                          className="p-1 border rounded shadow-sm ml-2 hover:bg-cancel ease-in-out transition-all dark:border-dark_primary"
+                          className="p-1 border rounded shadow-sm ml-2 hover:bg-cancel ease-in-out transition-all dark:border-type"
                           onClick={async (e) => {
                             e.preventDefault();
                             setEditId("");
@@ -209,7 +209,7 @@ export default function Home() {
                       <div className="">
                         {/* Edit */}
                         <button
-                          className="p-1 border rounded shadow-sm hover:bg-primary hover:dark:bg-dark_primary ease-in-out transition dark:border-dark_primary"
+                          className="p-1 border rounded shadow-sm hover:bg-primary hover:dark:bg-type ease-in-out transition-all dark:border-type"
                           onClick={async (e) => {
                             e.preventDefault();
                             setEditId(item._id);
@@ -218,7 +218,7 @@ export default function Home() {
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="icon icon-tabler icon-tabler-edit stroke-black dark:stroke-white"
+                            className="icon icon-tabler icon-tabler-edit stroke-black dark:stroke-text"
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
@@ -236,7 +236,7 @@ export default function Home() {
                         </button>
                         {/* Delete */}
                         <button
-                          className="p-1 border rounded shadow-sm ml-2 hover:bg-delete ease-in-out transition-all dark:border-dark_primary"
+                          className="p-1 border rounded shadow-sm ml-2 hover:bg-delete ease-in-out transition-all dark:border-type"
                           onClick={async (e) => {
                             e.preventDefault();
                             await axios.delete(url, {
@@ -249,7 +249,7 @@ export default function Home() {
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="icon icon-tabler icon-tabler-trash stroke-black dark:stroke-white"
+                            className="icon icon-tabler icon-tabler-trash stroke-black dark:stroke-text"
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
